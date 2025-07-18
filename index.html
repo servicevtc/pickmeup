@@ -22,6 +22,8 @@
       width: 100%;
       height: auto;
       display: block;
+      object-fit: cover;
+      max-height: 600px;
     }
     .header-text {
       position: absolute;
@@ -44,7 +46,7 @@
     }
     section {
       max-width: 800px;
-      margin: 20px auto;
+      margin: -60px auto 20px auto;
       background: white;
       padding: 30px;
       border-radius: 16px;
@@ -98,6 +100,13 @@
     }
   </style>
   <script defer>
+    function initAutocomplete() {
+      const startInput = document.getElementById('start');
+      const endInput = document.getElementById('end');
+      new google.maps.places.Autocomplete(startInput);
+      new google.maps.places.Autocomplete(endInput);
+    }
+
     const apiKey = "AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k";
     window.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('calculator-form');
@@ -124,10 +133,11 @@
       });
     });
   </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places&callback=initAutocomplete" async defer></script>
 </head>
 <body>
   <header>
-    <img src="https://raw.githubusercontent.com/servicevtc/pickmeup/main/jp-valery-RQub4zZuOCs-unsplash.jpg" alt="Tesla Model 3" class="banner">
+    <img src="https://servicevtc.github.io/pickmeup/jp-valery-RQub4zZuOCs-unsplash.jpg" alt="Tesla Model 3" class="banner">
     <div class="header-text">
       <h1>Pick me up</h1>
       <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
@@ -187,7 +197,7 @@
     <h2>Contact</h2>
     <p><strong>Téléphone :</strong> 06 46 28 57 02</p>
     <p><strong>Email :</strong> <a href="mailto:Dorian2rai@gmail.com">Dorian2rai@gmail.com</a></p>
-    <img src="https://raw.githubusercontent.com/servicevtc/pickmeup/main/Capture%20d%E2%80%99%C3%A9cran%202025-07-18%20%C3%A0%2009.35.26.png" alt="logo Pick Me Up" class="logo-contact">
+    <img src="https://servicevtc.github.io/pickmeup/Capture%20d%E2%80%99%C3%A9cran%202025-07-18%20%C3%A0%2009.35.26.png" alt="logo Pick Me Up" class="logo-contact">
   </section>
 
   <footer>
