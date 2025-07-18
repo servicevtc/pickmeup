@@ -1,207 +1,164 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pick Me Up - Chauffeur Privé</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f9f9f9;
-    }
-
-    header {
-      background: url('https://servicevtc.github.io/pickmeup/Capture%20d%27ecran%202025-07-18%20a%2009.35.26.png') center/cover no-repeat;
-      height: 60vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 3em;
-      margin: 0;
-      text-shadow: 2px 2px 8px black;
-    }
-
-    header p {
-      font-size: 1.3em;
-      text-shadow: 1px 1px 5px black;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 2em;
-      background-color: #fff;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-top: -100px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #b00000;
-    }
-
-    .services {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 2em;
-    }
-
-    .service {
-      background-color: #ffe5e5;
-      color: #b00000;
-      padding: 1em;
-      margin: 1em;
-      border-radius: 10px;
-      width: 220px;
-      text-align: center;
-    }
-
-    .form-group {
-      margin: 1em 0;
-      text-align: center;
-    }
-
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 1em;
-    }
-
-    button {
-      background-color: #b00000;
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      font-size: 1em;
-      cursor: pointer;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-
-    .whatsapp {
-      background-color: #25D366;
-      display: inline-block;
-      padding: 12px 30px;
-      border-radius: 30px;
-      color: white;
-      font-size: 1em;
-      text-decoration: none;
-    }
-
-    .a-propos {
-      background-color: #ffe5e5;
-      padding: 2em;
-      border-radius: 10px;
-      margin-top: 2em;
-      text-align: center;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1em;
-      color: #999;
-    }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 2em; }
-      .service { width: 90%; }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Pick me up - VTC Antibes</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f9f9f9;
+        text-align: center;
+      }
+      header {
+        background-image: url('https://source.unsplash.com/jp-valery-RQub4zZuOCs');
+        background-size: cover;
+        background-position: center;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+        text-shadow: 2px 2px 4px #000;
+      }
+      h1 {
+        font-size: 40px;
+        margin: 0;
+      }
+      p {
+        margin: 10px 0;
+      }
+      .services, .tarif, .about, .contact {
+        margin: 40px auto;
+        max-width: 600px;
+        padding: 20px;
+        border-radius: 20px;
+      }
+      .services {
+        background-color: #fff;
+      }
+      .service-box {
+        background-color: #ffe6e6;
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+      }
+      .tarif button {
+        background-color: #b30000;
+        color: white;
+        border: none;
+        padding: 15px 25px;
+        font-size: 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+      .whatsapp {
+        background-color: #25D366;
+        color: white;
+        border: none;
+        padding: 15px 25px;
+        font-size: 16px;
+        border-radius: 50px;
+        margin-top: 20px;
+        cursor: pointer;
+        display: inline-block;
+        text-decoration: none;
+      }
+      .about {
+        background-color: #ffe6e6;
+        color: black;
+      }
+      .contact {
+        background-color: #b30000;
+        color: white;
+      }
+      input {
+        padding: 10px;
+        width: 80%;
+        max-width: 300px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+    </style>
+    <script>
+      async function calculerTarif() {
+        const depart = document.getElementById("depart").value;
+        const arrivee = document.getElementById("arrivee").value;
+        const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(depart)}&destinations=${encodeURIComponent(arrivee)}&key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k`);
+        const data = await response.json();
+        if (data.status === "OK") {
+          const distance = data.rows[0].elements[0].distance.value / 1000;
+          let tarif = 0;
+          if (distance <= 7) tarif = distance * 2.5;
+          else if (distance <= 20) tarif = 7 * 2.5 + (distance - 7) * 2.2;
+          else tarif = 7 * 2.5 + 13 * 2.2 + (distance - 20) * 2.0;
+          if (depart.includes("Nice Airport") || arrivee.includes("Nice Airport")) tarif += 10;
+          if (tarif < 20) tarif = 20;
+          alert(`Tarif estimé : ${tarif.toFixed(2)} €`);
+        } else {
+          alert("Erreur lors du calcul. Vérifiez les adresses.");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header>
       <h1>Pick me up</h1>
       <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
-    </div>
-  </header>
+    </header>
 
-  <div class="container">
-    <h2>Nos services</h2>
-    <div class="services">
-      <div class="service">
-        <strong>Transferts aéroports</strong><br/>
+    <section class="services">
+      <h2 style="color: #b30000;">Nos services</h2>
+      <div class="service-box">
+        <strong>Transferts aéroports</strong><br>
         Nice, Cannes-Mandelieu, Héliport de Monaco
       </div>
-      <div class="service">
-        <strong>Mise à disposition</strong><br/>
-        Chauffeur dédié selon vos besoins personnels ou pros<br/>
-        <strong>100 € / heure TTC</strong>
+      <div class="service-box">
+        <strong>Mise à disposition</strong><br>
+        Chauffeur dédié selon vos besoins personnels ou pros<br><strong>100 € / heure TTC</strong>
       </div>
-      <div class="service">
-        <strong>Autres services</strong><br/>
-        Événementiel, navettes privées, séminaires…
+      <div class="service-box">
+        <strong>Autres services</strong><br>
+        Séminaires, événements, mariages…
       </div>
-    </div>
+    </section>
 
-    <h2>Estimez votre course</h2>
-    <div class="form-group">
-      <input type="text" id="start" placeholder="Adresse de départ"/>
-      <input type="text" id="end" placeholder="Adresse d’arrivée"/>
-      <button onclick="calculatePrice()">Calculer le tarif</button>
-      <p id="result"></p>
-      <p style="font-size: 0.9em; color: #555;">
-        * Minimum de facturation : 20 €<br/>
+    <section class="tarif">
+      <h2 style="color: #b30000;">Estimez votre course</h2>
+      <input id="depart" type="text" placeholder="Adresse de départ" />
+      <input id="arrivee" type="text" placeholder="Adresse d’arrivée" />
+      <br />
+      <button onclick="calculerTarif()">Calculer le tarif</button>
+      <p style="color: grey;">
+        * Minimum de facturation : 20 €<br />
         * Estimation indicative – tarif à valider avec le chauffeur.
       </p>
-      <a id="whatsappBtn" class="whatsapp" href="#" target="_blank">📱 Réserver sur WhatsApp</a>
-    </div>
+      <a class="whatsapp" href="https://wa.me/33600000000" target="_blank">📲 Réserver sur WhatsApp</a>
+    </section>
 
-    <div class="a-propos">
+    <section class="about">
       <p>
-        Fort d’une solide expérience dans le service haut de gamme, je propose un transport VTC discret et personnalisé.<br/><br/>
-        Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice, Monaco, Saint-Tropez et au-delà.<br/><br/>
-        Véhicule premium équipé de bouteilles d’eau et de chargeurs pour assurer votre confort.<br/><br/>
+        Fort d’une solide expérience dans le service haut de gamme,<br />
+        je propose un transport VTC discret et personnalisé.
+        <br><br>
+        Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice, Monaco, Saint-Tropez et au-delà.
+        <br><br>
+        Véhicule premium équipé de bouteilles d’eau et de chargeurs pour assurer votre confort.
+        <br><br>
         Choisissez un transport ponctuel, élégant et sécurisé pour chacun de vos trajets.
       </p>
-    </div>
-  </div>
+    </section>
 
-  <footer>
-    servicevtc.github.io
-  </footer>
-
-  <script>
-    function calculatePrice() {
-      const start = document.getElementById('start').value;
-      const end = document.getElementById('end').value;
-
-      const service = new google.maps.DistanceMatrixService();
-      service.getDistanceMatrix({
-        origins: [start],
-        destinations: [end],
-        travelMode: 'DRIVING',
-        unitSystem: google.maps.UnitSystem.METRIC
-      }, (response, status) => {
-        if (status !== 'OK') {
-          document.getElementById('result').innerText = "Erreur lors du calcul. Vérifiez les adresses.";
-          return;
-        }
-
-        const distanceInKm = response.rows[0].elements[0].distance.value / 1000;
-        let price = distanceInKm * 2.5;
-        if (price < 20) price = 20;
-
-        price = price.toFixed(2);
-        document.getElementById('result').innerText = `Tarif estimé : ${price} €`;
-
-        const whatsappLink = `https://wa.me/33634128290?text=Bonjour%2C+je+souhaite+r%C3%A9server+une+course+de+${start}+vers+${end}+pour+${price}+%E2%82%AC`;
-        document.getElementById('whatsappBtn').href = whatsappLink;
-      });
-    }
-  </script>
-
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places">
-  </script>
-</body>
+    <section class="contact">
+      <p>
+        Contact : +33 6 00 00 00 00<br />
+        Email : contact@pickmeup.com<br />
+        Antibes, France
+      </p>
+    </section>
+  </body>
 </html>
