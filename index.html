@@ -20,14 +20,13 @@
     }
     header img.banner {
       width: 100%;
-      height: auto;
+      height: 750px;
       display: block;
       object-fit: cover;
-      max-height: 600px;
     }
     .header-text {
       position: absolute;
-      top: 50%;
+      top: 20%;
       left: 50%;
       transform: translate(-50%, -50%);
       color: white;
@@ -37,39 +36,55 @@
     }
     .header-text h1 {
       margin: 0;
-      font-size: 36px;
+      font-size: 40px;
       color: #fff;
     }
     .header-text p {
       margin-top: 10px;
-      font-size: 18px;
+      font-size: 20px;
     }
+    .services-box {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 1000px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 16px;
+      padding: 30px 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .services-box > div {
+      flex: 1;
+      min-width: 250px;
+      background: #fff0f0;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .services-box strong {
+      color: #b40000;
+    }
+
     section {
       max-width: 800px;
-      margin: -60px auto 20px auto;
+      margin: 0 auto 40px auto;
       background: white;
       padding: 30px;
       border-radius: 16px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
       text-align: center;
     }
+
     h2 {
       color: #b40000;
     }
-    ul {
-      padding-left: 20px;
-      text-align: left;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      background-color: #00c04b;
-      color: white;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: 600;
-    }
+
     form input {
       width: 100%;
       padding: 10px;
@@ -77,6 +92,7 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
+
     form button {
       background-color: #b40000;
       color: white;
@@ -87,18 +103,32 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #00c04b;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+    }
+
+    .logo-contact {
+      width: 150px;
+      height: auto;
+      margin: 20px auto 0;
+      display: block;
+    }
+
     footer {
       text-align: center;
       padding: 30px 0;
       color: #555;
     }
-    .logo-contact {
-      width: 80px;
-      height: auto;
-      margin: 20px auto 0;
-      display: block;
-    }
   </style>
+
   <script defer>
     function initAutocomplete() {
       const startInput = document.getElementById('start');
@@ -118,14 +148,15 @@
         const end = encodeURIComponent(form.end.value);
 
         try {
-          const proxyUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${start}&destinations=${end}&key=${apiKey}`;
-          const response = await fetch(proxyUrl);
-          const data = await response.json();
+          const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${start}&destinations=${end}&key=${apiKey}`;
+          const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+          const dataWrapped = await response.json();
+          const data = JSON.parse(dataWrapped.contents);
 
           if (!data.rows || !data.rows[0].elements[0] || data.rows[0].elements[0].status !== 'OK') throw new Error();
           const distanceMeters = data.rows[0].elements[0].distance.value;
           const distanceKm = distanceMeters / 1000;
-          const cost = Math.max(20, distanceKm <= 7 ? distanceKm * 2.5 : distanceKm <= 20 ? 7 * 2.5 + (distanceKm - 7) * 2.2 : 7 * 2.5 + 13 * 2.2 + (distanceKm - 20) * 2.0);
+          const cost = Math.max(20, distanceKm * 2.5);
           result.textContent = `Distance : ${distanceKm.toFixed(2)} km. Tarif estimé : ${cost.toFixed(2)} €.`;
         } catch (err) {
           result.textContent = "Erreur lors du calcul. Vérifiez les adresses et réessayez.";
@@ -133,8 +164,10 @@
       });
     });
   </script>
+
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places&callback=initAutocomplete" async defer></script>
 </head>
+
 <body>
   <header>
     <img src="https://servicevtc.github.io/pickmeup/jp-valery-RQub4zZuOCs-unsplash.jpg" alt="Tesla Model 3" class="banner">
@@ -142,26 +175,23 @@
       <h1>Pick me up</h1>
       <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
     </div>
-  </header>
 
-  <section>
-    <h2>Nos services</h2>
-    <div style="display:flex; flex-wrap:wrap; justify-content:space-around; gap:20px;">
-      <div style="flex:1; min-width:250px; background:#fff0f0; padding:20px; border-radius:12px; text-align:center;">
-        <strong style="color:#b40000;">Transferts aéroports</strong><br>
+    <div class="services-box">
+      <div>
+        <strong>Transferts aéroports</strong><br>
         Nice, Cannes-Mandelieu, Héliport de Monaco
       </div>
-      <div style="flex:1; min-width:250px; background:#fff0f0; padding:20px; border-radius:12px; text-align:center;">
-        <strong style="color:#b40000;">Mise à disposition</strong><br>
+      <div>
+        <strong>Mise à disposition</strong><br>
         Chauffeur dédié selon vos besoins personnels ou pros<br>
         <strong>100 € / heure TTC</strong>
       </div>
-      <div style="flex:1; min-width:250px; background:#fff0f0; padding:20px; border-radius:12px; text-align:center;">
-        <strong style="color:#b40000;">Autres services</strong><br>
+      <div>
+        <strong>Autres services</strong><br>
         Événementiel, navettes privées, séminaires…
       </div>
     </div>
-  </section>
+  </header>
 
   <section>
     <h2>Estimez votre course</h2>
@@ -197,7 +227,7 @@
     <h2>Contact</h2>
     <p><strong>Téléphone :</strong> 06 46 28 57 02</p>
     <p><strong>Email :</strong> <a href="mailto:Dorian2rai@gmail.com">Dorian2rai@gmail.com</a></p>
-    <img src="https://servicevtc.github.io/pickmeup/Capture%20d%E2%80%99%C3%A9cran%202025-07-18%20%C3%A0%2009.35.26.png" alt="logo Pick Me Up" class="logo-contact">
+    <img src="https://github.com/servicevtc/pickmeup/raw/main/Capture%20d%E2%80%99%C3%A9cran%202025-07-18%20%C3%A0%2009.35.26.png" alt="logo Pick Me Up" class="logo-contact">
   </section>
 
   <footer>
