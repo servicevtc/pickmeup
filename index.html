@@ -14,13 +14,33 @@
       color: #111;
     }
     header {
+      position: relative;
       text-align: center;
-      background-color: #fff;
-      padding: 30px 20px 10px;
+      color: white;
     }
-    h1 {
+    header img.banner {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .header-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .header-text h1 {
       margin: 0;
-      color: #b40000;
+      font-size: 36px;
+      color: #fff;
+    }
+    .header-text p {
+      margin-top: 10px;
+      font-size: 18px;
     }
     section {
       max-width: 800px;
@@ -70,13 +90,6 @@
       padding: 30px 0;
       color: #555;
     }
-    .banner {
-      display: block;
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
     .logo-contact {
       width: 80px;
       height: auto;
@@ -98,8 +111,9 @@
         const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${start}&destination=${end}&key=${apiKey}`;
 
         try {
-          const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`);
+          const response = await fetch(url);
           const data = await response.json();
+          if (!data.routes || data.routes.length === 0) throw new Error();
           const distanceMeters = data.routes[0].legs[0].distance.value;
           const distanceKm = distanceMeters / 1000;
           const cost = Math.max(20, distanceKm * 2.5);
@@ -113,9 +127,11 @@
 </head>
 <body>
   <header>
-    <h1>Pick me up</h1>
-    <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
-    <img src="https://raw.githubusercontent.com/servicevtc/pickmeup/main/images/jp-valery-RQub4zZuOCs-unsplash.jpg" alt="Tesla Model 3" class="banner">
+    <img src="https://raw.githubusercontent.com/servicevtc/pickmeup/main/jp-valery-RQub4zZuOCs-unsplash.jpg" alt="Tesla Model 3" class="banner">
+    <div class="header-text">
+      <h1>Pick me up</h1>
+      <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
+    </div>
   </header>
 
   <section>
@@ -162,7 +178,8 @@
       Véhicule : Tesla Model 3 noire, premium et confortable.<br><br>
       Ponctualité, élégance, et… une bonne vanne de temps en temps, ça compte aussi 😉<br><br>
       Avec moi, pas de retard — sauf si c’est vous ! 😄<br><br>
-      Choisissez un transport ponctuel, élégant, sécurisé (et un peu fun) pour chacun de vos trajets.
+      Choisissez un transport ponctuel, élégant, sécurisé (et un peu fun) pour chacun de vos trajets.<br><br>
+      Sérieux sans se prendre au sérieux, c’est aussi ça l’élégance à la niçoise ! 🕶️
     </p>
   </section>
 
@@ -170,7 +187,7 @@
     <h2>Contact</h2>
     <p><strong>Téléphone :</strong> 06 46 28 57 02</p>
     <p><strong>Email :</strong> <a href="mailto:Dorian2rai@gmail.com">Dorian2rai@gmail.com</a></p>
-    <img src="https://raw.githubusercontent.com/servicevtc/pickmeup/main/images/Capture%20d%E2%80%99e%CC%81cran%202025-07-18%20a%CC%80%2009.35.26.png" alt="logo Pick Me Up" class="logo-contact">
+    <img src="https://raw.githubusercontent.com/servicevtc/pickmeup/main/Capture%20d%E2%80%99%C3%A9cran%202025-07-18%20%C3%A0%2009.35.26.png" alt="logo Pick Me Up" class="logo-contact">
   </section>
 
   <footer>
