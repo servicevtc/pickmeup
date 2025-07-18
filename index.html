@@ -117,15 +117,15 @@
         const start = encodeURIComponent(form.start.value);
         const end = encodeURIComponent(form.end.value);
 
-        const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${start}&destination=${end}&key=${apiKey}`;
-
         try {
-          const response = await fetch(url);
+          const proxyUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${start}&destinations=${end}&key=${apiKey}`;
+          const response = await fetch(proxyUrl);
           const data = await response.json();
-          if (!data.routes || data.routes.length === 0) throw new Error();
-          const distanceMeters = data.routes[0].legs[0].distance.value;
+
+          if (!data.rows || !data.rows[0].elements[0] || data.rows[0].elements[0].status !== 'OK') throw new Error();
+          const distanceMeters = data.rows[0].elements[0].distance.value;
           const distanceKm = distanceMeters / 1000;
-          const cost = Math.max(20, distanceKm * 2.5);
+          const cost = Math.max(20, distanceKm <= 7 ? distanceKm * 2.5 : distanceKm <= 20 ? 7 * 2.5 + (distanceKm - 7) * 2.2 : 7 * 2.5 + 13 * 2.2 + (distanceKm - 20) * 2.0);
           result.textContent = `Distance : ${distanceKm.toFixed(2)} km. Tarif estimé : ${cost.toFixed(2)} €.`;
         } catch (err) {
           result.textContent = "Erreur lors du calcul. Vérifiez les adresses et réessayez.";
