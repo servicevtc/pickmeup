@@ -8,81 +8,78 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f7f9fc;
       margin: 0;
       padding: 0;
+      background-color: #f7f9fc;
       color: #111;
     }
+
     header {
       position: relative;
       text-align: center;
       color: white;
     }
-    header img.banner {
-      width: 100%;
-      height: 750px;
-      display: block;
-      object-fit: cover;
-    }
-    .header-text {
+
+    header::before {
+      content: "";
       position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 20px;
-      border-radius: 12px;
+      inset: 0;
+      background: url('https://servicevtc.github.io/pickmeup/jp-valery-RQub4zZuOCs-unsplash.jpg') center/cover no-repeat;
+      filter: blur(4px) brightness(0.6);
+      z-index: 1;
     }
-    .header-text h1 {
+
+    header .content {
+      position: relative;
+      z-index: 2;
+      padding: 160px 20px 80px;
+    }
+
+    header h1 {
+      font-size: 48px;
       margin: 0;
-      font-size: 40px;
-      color: #fff;
     }
-    .header-text p {
-      margin-top: 10px;
+
+    header p {
       font-size: 20px;
-    }
-    .services-box {
-      position: absolute;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 1000px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      gap: 20px;
-      background-color: rgba(255,255,255,0.9);
-      border-radius: 16px;
-      padding: 30px 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .services-box > div {
-      flex: 1;
-      min-width: 250px;
-      background: #fff0f0;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-    }
-    .services-box strong {
-      color: #b40000;
+      margin-top: 10px;
     }
 
     section {
-      max-width: 800px;
-      margin: 0 auto 40px auto;
       background: white;
+      margin: 0 auto 30px;
       padding: 30px;
+      max-width: 860px;
       border-radius: 16px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
 
     h2 {
       color: #b40000;
+      text-align: center;
+    }
+
+    .services {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .services > div {
+      background: #fff0f0;
+      padding: 20px;
+      border-radius: 12px;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .services strong {
+      display: block;
+      color: #b40000;
+      margin-bottom: 5px;
     }
 
     form input {
@@ -106,29 +103,29 @@
 
     .btn {
       display: inline-block;
-      margin-top: 10px;
+      margin-top: 15px;
       background-color: #00c04b;
       color: white;
-      padding: 10px 20px;
-      text-decoration: none;
+      padding: 12px 22px;
       border-radius: 30px;
+      text-decoration: none;
       font-weight: 600;
-    }
-
-    .logo-contact {
-      width: 150px;
-      height: auto;
-      margin: 20px auto 0;
-      display: block;
     }
 
     footer {
       text-align: center;
       padding: 30px 0;
-      color: #555;
+      font-size: 14px;
+      color: #777;
+    }
+
+    #result {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 12px;
+      color: #333;
     }
   </style>
-
   <script defer>
     function initAutocomplete() {
       const startInput = document.getElementById('start');
@@ -138,6 +135,7 @@
     }
 
     const apiKey = "AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k";
+
     window.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('calculator-form');
       const result = document.getElementById('result');
@@ -156,42 +154,43 @@
           if (!data.rows || !data.rows[0].elements[0] || data.rows[0].elements[0].status !== 'OK') throw new Error();
           const distanceMeters = data.rows[0].elements[0].distance.value;
           const distanceKm = distanceMeters / 1000;
-          const cost = Math.max(20, distanceKm * 2.5);
+          const cost = Math.max(20, distanceKm * 2.5); // Minimum facturation = 20 €
           result.textContent = `Distance : ${distanceKm.toFixed(2)} km. Tarif estimé : ${cost.toFixed(2)} €.`;
         } catch (err) {
-          result.textContent = "Erreur lors du calcul. Vérifiez les adresses et réessayez.";
+          result.textContent = "Erreur lors du calcul. Vérifiez les adresses.";
         }
       });
     });
   </script>
-
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places&callback=initAutocomplete" async defer></script>
 </head>
-
 <body>
+
   <header>
-    <img src="https://servicevtc.github.io/pickmeup/jp-valery-RQub4zZuOCs-unsplash.jpg" alt="Tesla Model 3" class="banner">
-    <div class="header-text">
+    <div class="content">
       <h1>Pick me up</h1>
       <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
     </div>
+  </header>
 
-    <div class="services-box">
+  <section>
+    <h2>Nos services</h2>
+    <div class="services">
       <div>
-        <strong>Transferts aéroports</strong><br>
+        <strong>Transferts aéroports</strong>
         Nice, Cannes-Mandelieu, Héliport de Monaco
       </div>
       <div>
-        <strong>Mise à disposition</strong><br>
+        <strong>Mise à disposition</strong>
         Chauffeur dédié selon vos besoins personnels ou pros<br>
         <strong>100 € / heure TTC</strong>
       </div>
       <div>
-        <strong>Autres services</strong><br>
+        <strong>Autres services</strong>
         Événementiel, navettes privées, séminaires…
       </div>
     </div>
-  </header>
+  </section>
 
   <section>
     <h2>Estimez votre course</h2>
@@ -207,7 +206,7 @@
     <div style="text-align:center;">
       <a class="btn" href="https://wa.me/33646285702" target="_blank">📱 Réserver sur WhatsApp</a>
     </div>
-    <p id="result" style="text-align:center; font-weight:bold; margin-top:10px;"></p>
+    <p id="result"></p>
   </section>
 
   <section>
@@ -227,7 +226,6 @@
     <h2>Contact</h2>
     <p><strong>Téléphone :</strong> 06 46 28 57 02</p>
     <p><strong>Email :</strong> <a href="mailto:Dorian2rai@gmail.com">Dorian2rai@gmail.com</a></p>
-    <img src="https://github.com/servicevtc/pickmeup/raw/main/Capture%20d%E2%80%99%C3%A9cran%202025-07-18%20%C3%A0%2009.35.26.png" alt="logo Pick Me Up" class="logo-contact">
   </section>
 
   <footer>
