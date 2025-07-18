@@ -2,218 +2,191 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pick me up – Chauffeur Privé VTC</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pick Me Up – VTC Antibes & Côte d'Azur</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f5f7fa;
-      color: #111;
-    }
+    :root { --red: #cf2626; --light: #fff3f3; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background: #f9f9f9; color: #111; }
     header {
-      position: relative;
-      text-align: center;
-      color: white;
+      background: url('https://images.unsplash.com/photo-1606813902912-ae7b02ac07dc?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      height: 55vh; display: flex; flex-direction: column; justify-content: center;
+      align-items: center; text-align: center; color: #fff;
     }
-    header img {
-      width: 100%;
-      height: auto;
-      filter: brightness(60%);
+    header h1 { font-size: 2.7rem; font-weight: 600; text-shadow: 0 2px 5px rgba(0,0,0,0.45); }
+    header p { font-size: 1.2rem; opacity: .92; }
+
+    main {
+      max-width: 1000px; margin: -3rem auto 2rem;
+      background: #fff; border-radius: 20px; padding: 2rem;
+      box-shadow: 0 5px 22px rgba(0,0,0,0.08);
     }
-    header .overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0;
-    }
-    header p {
-      font-size: 1.25rem;
-      margin-top: 0.5rem;
-    }
-    section {
-      text-align: center;
-      margin: 2rem 1rem;
-    }
+    h2 { color: var(--red); margin-bottom: 1rem; text-align: center; font-weight: 600; }
     .services {
-      background: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      max-width: 800px;
-      margin: auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 1.5rem; margin-bottom: 1rem;
     }
-    .service {
-      background-color: #ffeaea;
-      border-radius: 10px;
-      padding: 1rem;
-      margin: 1rem 0;
+    .card {
+      background: var(--light); border-radius: 12px; padding: 1.5rem;
+      text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-    .service h3 {
-      margin-bottom: 0.5rem;
-      color: darkred;
-    }
-    .estimation {
-      background: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      max-width: 800px;
-      margin: 2rem auto 1rem;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 1rem;
-      margin: 0.5rem 0;
-      font-size: 1rem;
-    }
-    button {
-      background-color: darkred;
-      color: white;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border: none;
-      width: 100%;
-      border-radius: 5px;
-      margin-top: 1rem;
-    }
-    .note {
-      font-size: 0.8rem;
-      margin-top: 1rem;
+    .card h3 { color: var(--red); margin-bottom: .5rem; }
+
+    .services-note {
+      text-align: center;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
       color: #333;
     }
-    .whatsapp {
-      display: block;
-      margin: 2rem auto;
-      background-color: #25D366;
-      color: white;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-      text-decoration: none;
-      border-radius: 50px;
-      max-width: 300px;
+
+    .calculator { text-align: center; max-width: 500px; margin: 2rem auto; }
+    .calculator input, .calculator button {
+      width: 100%; padding: .9rem; font-size: 1rem; margin-bottom: .8rem;
+      border-radius: 6px; border: 1px solid #ccc;
     }
-    .apropos {
-      background-color: rgba(207, 38, 38, 0.9);
-      color: white;
-      padding: 2rem 1rem;
-      border-radius: 30px;
-      margin: 2rem 1rem 1rem;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+    .calculator button {
+      background: var(--red); color: #fff; border: none;
+      cursor: pointer; transition: background .3s;
     }
-    .footer {
+    .calculator button:hover { background: #a91f1f; }
+
+    .about-box {
+      background: var(--light); border-left: 6px solid var(--red);
+      padding: 2rem; border-radius: 10px; margin: 2rem auto;
+      max-width: 700px; font-size: 1.05rem; text-align: center;
+    }
+
+    .whatsapp-container {
       text-align: center;
-      padding: 2rem 1rem;
+      margin: 2rem 0;
     }
-    .footer p {
-      margin: 0.5rem 0;
+    .whatsapp-button {
+      background: #25D366; color: white; padding: 1rem 1.5rem;
+      border: none; border-radius: 40px; font-size: 1.1rem;
+      text-decoration: none; display: inline-block;
     }
-    .footer strong {
-      display: block;
-      margin-top: 1rem;
+
+    footer {
+      background: #fff; color: #000; text-align: center;
+      padding: 2rem 1rem; font-size: 1rem;
+    }
+    footer a {
+      color: #000; text-decoration: underline; font-weight: 600;
+      display: inline-block; margin-top: .2rem;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places"></script>
-  <script>
-    function initAutocomplete() {
-      const input1 = document.getElementById("start");
-      const input2 = document.getElementById("end");
-      new google.maps.places.Autocomplete(input1);
-      new google.maps.places.Autocomplete(input2);
-    }
-
-    function calculateRoute() {
-      const start = document.getElementById("start").value;
-      const end = document.getElementById("end").value;
-
-      if (!start || !end) {
-        alert("Veuillez remplir les deux adresses.");
-        return;
-      }
-
-      const service = new google.maps.DistanceMatrixService();
-      service.getDistanceMatrix({
-        origins: [start],
-        destinations: [end],
-        travelMode: 'DRIVING',
-        unitSystem: google.maps.UnitSystem.METRIC,
-      }, function(response, status) {
-        if (status !== 'OK') {
-          alert("Erreur lors du calcul. Vérifiez les adresses et réessayez.");
-        } else {
-          const distanceText = response.rows[0].elements[0].distance.text;
-          const distanceVal = response.rows[0].elements[0].distance.value / 1000;
-
-          let price = 0;
-          if (distanceVal <= 7) price = distanceVal * 2.5;
-          else if (distanceVal <= 20) price = 7 * 2.5 + (distanceVal - 7) * 2.2;
-          else price = 7 * 2.5 + 13 * 2.2 + (distanceVal - 20) * 2.0;
-
-          if (start.includes("Nice Airport") || end.includes("Nice Airport")) price += 10;
-          if (price < 20) price = 20;
-
-          document.getElementById("result").innerText = `Tarif estimé : ${price.toFixed(2)} €`;
-        }
-      });
-    }
-  </script>
 </head>
-<body onload="initAutocomplete()">
+<body>
   <header>
-    <img src="https://images.unsplash.com/photo-1618005198919-d3d4b3c14d5e?auto=format&fit=crop&w=1400&q=80" alt="Voiture de luxe"/>
-    <div class="overlay">
-      <h1>Pick me up</h1>
-      <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
-    </div>
+    <h1>Pick Me Up</h1>
+    <p>VTC Premium à Antibes, Cannes, Nice, Monaco...</p>
   </header>
 
-  <section class="services">
-    <h2 style="color: darkred;">Nos services</h2>
-    <div class="service">
-      <h3>Transferts aéroports</h3>
-      <p>Nice, Cannes-Mandelieu, Héliport de Monaco</p>
+  <main>
+    <h2>Nos services</h2>
+    <div class="services">
+      <div class="card">
+        <h3>Transferts aéroports & gares</h3>
+        <p>Nice, Cannes-Mandelieu, Monaco Heliport, SNCF...</p>
+      </div>
+      <div class="card">
+        <h3>Mise à disposition</h3>
+        <p>Chauffeur privé pour vos besoins pro ou perso.<br><strong>100 € / heure</strong></p>
+      </div>
+      <div class="card">
+        <h3>Navettes & événements</h3>
+        <p>Séminaires, mariages, congrès, sorties VIP...</p>
+      </div>
     </div>
-    <div class="service">
-      <h3>Mise à disposition</h3>
-      <p>Chauffeur dédié selon vos besoins personnels ou pros<br>100 € / heure TTC</p>
+
+    <p class="services-note">
+      Véhicule premium équipé pour votre confort : eau, chargeurs, climatisation.
+    </p>
+
+    <div class="calculator">
+      <h2>Estimez votre course</h2>
+      <form id="price-form">
+        <input type="text" id="start" placeholder="Adresse de départ" required />
+        <input type="text" id="end" placeholder="Adresse d'arrivée" required />
+        <button type="submit">Calculer le tarif</button>
+      </form>
+      <p><em>* Minimum de facturation : 20 €</em></p>
+      <p><em>* Estimation indicative à confirmer avec le chauffeur.</em></p>
+      <p id="price-result"></p>
     </div>
-    <div class="service">
-      <h3>Autres services</h3>
-      <p>Événementiel, navettes privées, séminaires...</p>
+
+    <div class="whatsapp-container">
+      <a class="whatsapp-button" href="https://wa.me/33600000000" target="_blank">📲 Réserver sur WhatsApp</a>
     </div>
-  </section>
 
-  <section class="estimation">
-    <h2 style="color: darkred;">Estimez votre course</h2>
-    <input type="text" id="start" placeholder="Adresse de départ"/>
-    <input type="text" id="end" placeholder="Adresse d'arrivée"/>
-    <button onclick="calculateRoute()">Calculer le tarif</button>
-    <div id="result" class="note"></div>
-    <p class="note">* Minimum de facturation : 20 €<br>* Estimation indicative – tarif à valider avec le chauffeur.</p>
-  </section>
+    <div class="about-box">
+      <p>Fort d’une solide expérience dans le service haut de gamme, je propose un transport VTC discret et personnalisé.<br><br>
+      Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice, Monaco, Saint-Tropez et au-delà.<br><br>
+      Sécurité, confort, ponctualité : voyagez en toute confiance.</p>
+    </div>
+  </main>
 
-  <a href="https://wa.me/33600000000" class="whatsapp">📱 Réserver sur WhatsApp</a>
-
-  <section class="apropos">
-    <h2>À propos</h2>
-    <p>Fort d’une solide expérience dans le service haut de gamme, je propose un transport VTC discret et personnalisé.</p>
-    <p>Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice, Monaco, Saint-Tropez et au-delà.</p>
-    <p>Véhicule premium équipé de bouteilles d’eau et de chargeurs pour un confort optimal.</p>
-  </section>
-
-  <footer class="footer">
-    <p>📍 Basé à Antibes</p>
-    <p>📞 <a href="tel:0600000000">06 00 00 00 00</a></p>
-    <p>✉️ <a href="mailto:contact@email.com">contact@email.com</a></p>
-    <strong>© 2025 Pick me up – Tous droits réservés</strong>
-    <p>servicevtc.github.io</p>
+  <footer>
+    <h2>Contact & Réservation</h2>
+    <div>
+      📞 <a href="tel:0600000000">06 00 00 00 00</a><br>
+      📧 <a href="mailto:contact@email.com">contact@email.com</a>
+    </div>
+    <p style="margin-top: 1rem; font-size: 0.85rem; color: #555">
+      © 2025 Pick Me Up – Tous droits réservés
+    </p>
   </footer>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places&callback=initAutocomplete" async defer></script>
+  <script>
+    let autocompleteStart, autocompleteEnd;
+
+    function initAutocomplete() {
+      autocompleteStart = new google.maps.places.Autocomplete(document.getElementById('start'));
+      autocompleteEnd = new google.maps.places.Autocomplete(document.getElementById('end'));
+    }
+
+    document.getElementById('price-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const start = document.getElementById('start').value.toLowerCase();
+      const end = document.getElementById('end').value.toLowerCase();
+
+      const service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix(
+        {
+          origins: [start],
+          destinations: [end],
+          travelMode: 'DRIVING',
+          unitSystem: google.maps.UnitSystem.METRIC,
+        },
+        function(response, status) {
+          if (status === 'OK') {
+            const distanceText = response.rows[0].elements[0].distance.text;
+            const km = parseFloat(distanceText.replace(',', '.'));
+            let price = 0;
+
+            if (km <= 7) {
+              price = km * 2.5;
+            } else if (km <= 20) {
+              price = 7 * 2.5 + (km - 7) * 2.2;
+            } else {
+              price = 7 * 2.5 + 13 * 2.2 + (km - 20) * 2.0;
+            }
+
+            if (start.includes("aéroport") || end.includes("aéroport")) {
+              price += 10;
+            }
+
+            if (price < 20) price = 20;
+
+            document.getElementById('price-result').innerHTML = `<strong>Estimation : ${price.toFixed(2)} €</strong>`;
+          } else {
+            document.getElementById('price-result').textContent = "Erreur : distance non disponible.";
+          }
+        }
+      );
+    });
+  </script>
 </body>
 </html>
