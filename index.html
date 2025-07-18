@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pick me up - Chauffeur Privé</title>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places"></script>
   <style>
     body {
-      margin: 0;
       font-family: 'Arial', sans-serif;
-      background-color: #fff;
-      color: #111;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #000;
     }
     header {
       background: url('https://servicevtc.github.io/pickmeup/tesla.jpg') center/cover no-repeat;
@@ -23,182 +24,156 @@
       text-shadow: 0 0 10px #000;
       text-align: center;
     }
-    header h1 {
-      font-size: 2.5em;
-      margin: 0;
-    }
-    header p {
-      font-size: 1.2em;
-    }
     section {
-      padding: 30px 15px;
+      padding: 30px 20px;
+    }
+    h2 {
+      color: #b30000;
       text-align: center;
-    }
-    .services {
-      background-color: #fff;
-    }
-    .services h2 {
-      color: #c00;
     }
     .box {
       background: #ffecec;
-      margin: 15px auto;
+      border-radius: 20px;
       padding: 20px;
-      border-radius: 15px;
-      max-width: 400px;
+      margin: 15px auto;
+      max-width: 500px;
+      text-align: center;
     }
-    .estimate input {
-      padding: 10px;
-      margin: 5px 0;
-      width: 90%;
-      max-width: 400px;
-    }
-    button {
-      background: #c00;
+    .red {
+      background-color: #b30000;
       color: #fff;
-      padding: 15px 30px;
-      font-size: 1em;
       border: none;
+      padding: 15px 30px;
+      font-size: 16px;
       border-radius: 10px;
       cursor: pointer;
       margin-top: 10px;
     }
-    .whatsapp {
-      background: #25D366;
+    .green {
+      background-color: #25D366;
       color: white;
-      margin-top: 15px;
-      display: inline-block;
+      border: none;
       padding: 15px 30px;
-      border-radius: 50px;
+      font-size: 16px;
+      border-radius: 30px;
       text-decoration: none;
-      font-weight: bold;
-    }
-    .whatsapp::before {
-      content: "📱 ";
-    }
-    .about {
-      background-color: #c00;
-      color: white;
-      padding: 30px 15px;
-      border-radius: 30px 30px 0 0;
-    }
-    .about h2 {
-      color: white;
-    }
-    .contact {
-      padding: 30px 15px;
-      background: #f2f2f2;
-    }
-    .contact h2 {
-      color: #c00;
+      display: inline-block;
+      margin-top: 20px;
     }
     footer {
-      background: #fff;
-      padding: 15px;
+      background: #f5f5f5;
+      padding: 30px 20px;
       text-align: center;
-      font-size: 0.9em;
-      color: #555;
+    }
+    input {
+      padding: 10px;
+      width: 80%;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    .price-info {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Pick me up</h1>
     <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
   </header>
 
-  <section class="services">
+  <section>
     <h2>Nos services</h2>
+
     <div class="box">
-      <strong>Transferts aéroports</strong><br />
+      <strong>Transferts aéroports</strong><br>
       Nice, Cannes-Mandelieu, Héliport de Monaco
     </div>
+
     <div class="box">
-      <strong>Mise à disposition</strong><br />
-      Chauffeur dédié selon vos besoins personnels ou pros<br />
+      <strong>Mise à disposition</strong><br>
+      Chauffeur dédié selon vos besoins personnels ou pros<br>
       <strong>100 € / heure TTC</strong>
     </div>
+
     <div class="box">
-      <strong>Autres services</strong><br />
-      Événementiel, mariages, soirées, rendez-vous médicaux...
+      <strong>Autres services</strong><br>
+      Transferts toutes distances, événements, mariages
     </div>
   </section>
 
-  <section class="estimate">
+  <section>
     <h2>Estimez votre course</h2>
-    <input id="origin" type="text" placeholder="Adresse de départ" /><br />
-    <input id="destination" type="text" placeholder="Adresse d’arrivée" /><br />
-    <button onclick="calculatePrice()">Calculer le tarif</button>
-    <p style="font-size: 0.9em; color: grey;">
-      * Minimum de facturation : 20 €<br />
-      * Estimation indicative – tarif à valider avec le chauffeur.
-    </p>
-    <p id="result"></p>
-    <a class="whatsapp" href="https://wa.me/33634128290" target="_blank">Réserver sur WhatsApp</a>
+    <input id="origin-input" type="text" placeholder="Adresse de départ">
+    <input id="destination-input" type="text" placeholder="Adresse d’arrivée">
+    <button class="red" onclick="calculatePrice()">Calculer le tarif</button>
+    <div class="price-info" id="price"></div>
+    <p style="text-align:center; font-size: 14px;">* Minimum de facturation : 20 €<br>* Estimation indicative – tarif à valider avec le chauffeur.</p>
+    <div style="text-align:center;">
+      <a class="green" href="https://wa.me/33634128290" target="_blank">📱 Réserver sur WhatsApp</a>
+    </div>
   </section>
 
-  <section class="about">
+  <section style="background-color:#b30000; color:white; border-radius: 30px; margin: 30px 20px;">
     <h2>À propos</h2>
-    <p>
-      Fort d’une solide expérience dans le service haut de gamme,<br />
-      je propose un transport VTC discret et personnalisé.
-    </p>
-    <p>
-      Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice,<br />
-      Monaco, Saint-Tropez et au-delà.
-    </p>
-    <p>
-      Véhicule premium équipé de bouteilles d’eau et de chargeurs<br />
-      pour assurer votre confort.
-    </p>
-    <p>
-      Choisissez un transport ponctuel, élégant et sécurisé pour chacun<br />
-      de vos trajets.
-    </p>
-  </section>
-
-  <section class="contact">
-    <h2>Contact</h2>
-    <p>📞 06 34 12 82 90</p>
-    <p>📧 contact@servicevtc.fr</p>
+    <div class="box" style="background-color:#b30000; color:white;">
+      Fort d’une solide expérience dans le service haut de gamme, je propose un transport VTC discret et personnalisé.<br><br>
+      Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice, Monaco, Saint-Tropez et au-delà.<br><br>
+      Véhicule premium équipé de bouteilles d’eau et de chargeurs pour assurer votre confort.<br><br>
+      Choisissez un transport ponctuel, élégant et sécurisé pour chacun de vos trajets.
+    </div>
   </section>
 
   <footer>
-    servicevtc.github.io
+    <h2>Contact</h2>
+    <p>📞 06 34 12 82 90<br>📧 contact@pickmeup.com</p>
+    <p style="font-size: 14px; color: #888;">servicevtc.github.io</p>
   </footer>
 
   <script>
+    let originAutocomplete, destinationAutocomplete;
+
     function initAutocomplete() {
-      const options = {
-        componentRestrictions: { country: "fr" }
-      };
-      new google.maps.places.Autocomplete(document.getElementById("origin"), options);
-      new google.maps.places.Autocomplete(document.getElementById("destination"), options);
+      originAutocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("origin-input")
+      );
+      destinationAutocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("destination-input")
+      );
     }
 
     function calculatePrice() {
-      const origin = document.getElementById("origin").value;
-      const destination = document.getElementById("destination").value;
-      const service = new google.maps.DistanceMatrixService();
+      const origin = document.getElementById("origin-input").value;
+      const destination = document.getElementById("destination-input").value;
 
+      const service = new google.maps.DistanceMatrixService();
       service.getDistanceMatrix(
         {
           origins: [origin],
           destinations: [destination],
-          travelMode: google.maps.TravelMode.DRIVING
+          travelMode: 'DRIVING',
+          unitSystem: google.maps.UnitSystem.METRIC,
         },
         (response, status) => {
           if (status === "OK") {
+            const distanceText = response.rows[0].elements[0].distance.text;
             const distanceValue = response.rows[0].elements[0].distance.value / 1000;
-            let price = 0;
-            if (distanceValue <= 7) price = distanceValue * 2.5;
-            else if (distanceValue <= 20) price = 7 * 2.5 + (distanceValue - 7) * 2.2;
-            else price = 7 * 2.5 + 13 * 2.2 + (distanceValue - 20) * 2;
+            let price;
+            if (distanceValue <= 7) {
+              price = distanceValue * 2.5;
+            } else if (distanceValue <= 20) {
+              price = distanceValue * 2.2;
+            } else {
+              price = distanceValue * 2.0;
+            }
             if (price < 20) price = 20;
-            document.getElementById("result").innerHTML =
-              `<strong>Distance :</strong> ${distanceValue.toFixed(2)} km<br><strong>Tarif estimé :</strong> ${price.toFixed(2)} €`;
-          } else {
-            document.getElementById("result").innerHTML = "Erreur lors du calcul.";
+            document.getElementById("price").innerHTML = `
+              <strong>Distance :</strong> ${distanceValue.toFixed(2)} km<br>
+              <strong>Tarif estimé :</strong> ${price.toFixed(2)} €`;
           }
         }
       );
