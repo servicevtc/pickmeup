@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pick me up - Chauffeur Privé</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background: url('https://images.unsplash.com/photo-1603034147613-923bb9aa0b3f?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    header h1 {
+      font-size: 3em;
+      margin-bottom: 0.3em;
+    }
+    header p {
+      font-size: 1.2em;
+      margin: 0;
+    }
+    section {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #007BFF;
+      margin-bottom: 20px;
+    }
+    .services {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .service-box {
+      background: #f1f5ff;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 12px;
+      width: 220px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .service-box h3 {
+      color: #0056d2;
+    }
+    form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056d2;
+    }
+    .whatsapp-btn {
+      background-color: #25d366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      font-size: 1em;
+      padding: 12px;
+      border-radius: 50px;
+      color: white;
+      text-decoration: none;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pick me up</h1>
+    <p>Antibes • Cannes • Nice</p>
+  </header>
+
+  <section>
+    <h2>Nos services</h2>
+    <div class="services">
+      <div class="service-box">
+        <h3>Transferts aéroports</h3>
+        <p>Nice, Cannes-Mandelieu, Héliport de Monaco</p>
+      </div>
+      <div class="service-box">
+        <h3>Mise à disposition</h3>
+        <p>Chauffeur dédié selon vos besoins personnels ou pros<br><strong>100 € / heure TTC</strong></p>
+      </div>
+      <div class="service-box">
+        <h3>Autres services</h3>
+        <p>Événementiel, navettes privées, séminaires…</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Estimez votre course</h2>
+    <form id="calculator-form">
+      <input type="text" id="start" name="start" placeholder="Adresse de départ" required>
+      <input type="text" id="end" name="end" placeholder="Adresse d'arrivée" required>
+      <button type="submit">Calculer le tarif</button>
+    </form>
+    <p style="text-align:center; font-size: 0.9em; margin-top:10px;">
+      * Minimum de facturation : 20 €<br>
+      * Estimation indicative – tarif à valider avec le chauffeur.<br>
+      <strong id="result"></strong>
+    </p>
+    <a class="whatsapp-btn" href="https://wa.me/33646285702" target="_blank">📱 Réserver sur WhatsApp</a>
+  </section>
+
+  <section>
+    <h2>À propos</h2>
+    <p>
+      Fort d’une solide expérience dans le service haut de gamme, je propose un transport VTC discret et personnalisé.<br><br>
+      Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice et alentours.<br><br>
+      Véhicule : Tesla Model 3 noire, premium et confortable.<br><br>
+      Choisissez un transport ponctuel, élégant et sécurisé pour chacun de vos trajets.
+    </p>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p><strong>Téléphone :</strong> 06 46 28 57 02</p>
+    <p><strong>Email :</strong> <a href="mailto:Dorian2rai@gmail.com">Dorian2rai@gmail.com</a></p>
+  </section>
+
+  <footer>
+    © 2025 Pick me up – Tous droits réservés
+  </footer>
+
+  <script>
+    const form = document.getElementById('calculator-form');
+    const result = document.getElementById('result');
+    const apiKey = "AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k";
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const start = encodeURIComponent(form.start.value);
+      const end = encodeURIComponent(form.end.value);
+      const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${start}&destination=${end}&key=${apiKey}`;
+      try {
+        const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        const distanceMeters = data.routes[0].legs[0].distance.value;
+        const distanceKm = distanceMeters / 1000;
+        const cost = Math.max(20, distanceKm * 2.5);
+        result.textContent = `Distance : ${distanceKm.toFixed(2)} km – Estimation : ${cost.toFixed(2)} €`;
+      } catch (err) {
+        result.textContent = "Erreur lors du calcul. Vérifiez les adresses.";
+      }
+    });
+  </script>
+
+</body>
+</html>
