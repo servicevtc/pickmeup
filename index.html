@@ -13,7 +13,7 @@
       color: #111;
     }
     header {
-      background: url('https://servicevtc.github.io/pickmeup/Capture%20d’écran%202025-07-18%20à%2009.35.26.png') center/cover no-repeat;
+      background: url('https://servicevtc.github.io/pickmeup/tesla.jpg') center/cover no-repeat;
       height: 300px;
       display: flex;
       flex-direction: column;
@@ -46,9 +46,6 @@
       padding: 20px;
       border-radius: 15px;
       max-width: 400px;
-    }
-    .estimate {
-      background: #fff;
     }
     .estimate input {
       padding: 10px;
@@ -87,6 +84,13 @@
     }
     .about h2 {
       color: white;
+    }
+    .contact {
+      padding: 30px 15px;
+      background: #f2f2f2;
+    }
+    .contact h2 {
+      color: #c00;
     }
     footer {
       background: #fff;
@@ -153,6 +157,12 @@
     </p>
   </section>
 
+  <section class="contact">
+    <h2>Contact</h2>
+    <p>📞 06 34 12 82 90</p>
+    <p>📧 contact@servicevtc.fr</p>
+  </section>
+
   <footer>
     servicevtc.github.io
   </footer>
@@ -179,16 +189,12 @@
         },
         (response, status) => {
           if (status === "OK") {
-            const distanceText = response.rows[0].elements[0].distance.text;
             const distanceValue = response.rows[0].elements[0].distance.value / 1000;
             let price = 0;
-
             if (distanceValue <= 7) price = distanceValue * 2.5;
             else if (distanceValue <= 20) price = 7 * 2.5 + (distanceValue - 7) * 2.2;
             else price = 7 * 2.5 + 13 * 2.2 + (distanceValue - 20) * 2;
-
             if (price < 20) price = 20;
-
             document.getElementById("result").innerHTML =
               `<strong>Distance :</strong> ${distanceValue.toFixed(2)} km<br><strong>Tarif estimé :</strong> ${price.toFixed(2)} €`;
           } else {
