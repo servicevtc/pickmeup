@@ -2,234 +2,206 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pick me up - Chauffeur Privé</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pick Me Up - Chauffeur Privé</title>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f7f9fc;
-      color: #111;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
     }
 
     header {
-      position: relative;
-      text-align: center;
+      background: url('https://servicevtc.github.io/pickmeup/Capture%20d%27ecran%202025-07-18%20a%2009.35.26.png') center/cover no-repeat;
+      height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: white;
-    }
-
-    header::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url('https://servicevtc.github.io/pickmeup/jp-valery-RQub4zZuOCs-unsplash.jpg') center/cover no-repeat;
-      filter: blur(4px) brightness(0.6);
-      z-index: 1;
-    }
-
-    header .content {
-      position: relative;
-      z-index: 2;
-      padding: 160px 20px 80px;
+      text-align: center;
     }
 
     header h1 {
-      font-size: 48px;
+      font-size: 3em;
       margin: 0;
+      text-shadow: 2px 2px 8px black;
     }
 
     header p {
-      font-size: 20px;
-      margin-top: 10px;
+      font-size: 1.3em;
+      text-shadow: 1px 1px 5px black;
     }
 
-    section {
-      background: white;
-      margin: 0 auto 30px;
-      padding: 30px;
-      max-width: 860px;
-      border-radius: 16px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 2em;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-top: -100px;
     }
 
     h2 {
-      color: #b40000;
       text-align: center;
+      color: #b00000;
     }
 
     .services {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
-      gap: 20px;
+      justify-content: center;
+      margin-bottom: 2em;
+    }
+
+    .service {
+      background-color: #ffe5e5;
+      color: #b00000;
+      padding: 1em;
+      margin: 1em;
+      border-radius: 10px;
+      width: 220px;
       text-align: center;
-      margin-top: 20px;
     }
 
-    .services > div {
-      background: #fff0f0;
-      padding: 20px;
-      border-radius: 12px;
-      flex: 1;
-      min-width: 250px;
+    .form-group {
+      margin: 1em 0;
+      text-align: center;
     }
 
-    .services strong {
-      display: block;
-      color: #b40000;
-      margin-bottom: 5px;
-    }
-
-    form input {
-      width: 100%;
+    input {
+      width: 90%;
       padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 1em;
     }
 
-    form button {
-      background-color: #b40000;
+    button {
+      background-color: #b00000;
       color: white;
-      padding: 10px;
       border: none;
-      border-radius: 8px;
-      width: 100%;
-      font-weight: bold;
+      padding: 12px 30px;
+      font-size: 1em;
       cursor: pointer;
+      border-radius: 8px;
+      margin-bottom: 10px;
     }
 
-    .btn {
+    .whatsapp {
+      background-color: #25D366;
       display: inline-block;
-      margin-top: 15px;
-      background-color: #00c04b;
-      color: white;
-      padding: 12px 22px;
+      padding: 12px 30px;
       border-radius: 30px;
+      color: white;
+      font-size: 1em;
       text-decoration: none;
-      font-weight: 600;
+    }
+
+    .a-propos {
+      background-color: #ffe5e5;
+      padding: 2em;
+      border-radius: 10px;
+      margin-top: 2em;
+      text-align: center;
     }
 
     footer {
       text-align: center;
-      padding: 30px 0;
-      font-size: 14px;
-      color: #777;
+      padding: 1em;
+      color: #999;
     }
 
-    #result {
-      text-align: center;
-      font-weight: bold;
-      margin-top: 12px;
-      color: #333;
+    @media (max-width: 600px) {
+      header h1 { font-size: 2em; }
+      .service { width: 90%; }
     }
   </style>
-  <script defer>
-    function initAutocomplete() {
-      const startInput = document.getElementById('start');
-      const endInput = document.getElementById('end');
-      new google.maps.places.Autocomplete(startInput);
-      new google.maps.places.Autocomplete(endInput);
-    }
-
-    const apiKey = "AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k";
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('calculator-form');
-      const result = document.getElementById('result');
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const start = encodeURIComponent(form.start.value);
-        const end = encodeURIComponent(form.end.value);
-
-        try {
-          const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${start}&destinations=${end}&key=${apiKey}`;
-          const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-          const dataWrapped = await response.json();
-          const data = JSON.parse(dataWrapped.contents);
-
-          if (!data.rows || !data.rows[0].elements[0] || data.rows[0].elements[0].status !== 'OK') throw new Error();
-          const distanceMeters = data.rows[0].elements[0].distance.value;
-          const distanceKm = distanceMeters / 1000;
-          const cost = Math.max(20, distanceKm * 2.5); // Minimum facturation = 20 €
-          result.textContent = `Distance : ${distanceKm.toFixed(2)} km. Tarif estimé : ${cost.toFixed(2)} €.`;
-        } catch (err) {
-          result.textContent = "Erreur lors du calcul. Vérifiez les adresses.";
-        }
-      });
-    });
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places&callback=initAutocomplete" async defer></script>
 </head>
 <body>
-
   <header>
-    <div class="content">
+    <div>
       <h1>Pick me up</h1>
       <p>Votre chauffeur privé à Antibes, Cannes et alentours</p>
     </div>
   </header>
 
-  <section>
+  <div class="container">
     <h2>Nos services</h2>
     <div class="services">
-      <div>
-        <strong>Transferts aéroports</strong>
+      <div class="service">
+        <strong>Transferts aéroports</strong><br/>
         Nice, Cannes-Mandelieu, Héliport de Monaco
       </div>
-      <div>
-        <strong>Mise à disposition</strong>
-        Chauffeur dédié selon vos besoins personnels ou pros<br>
+      <div class="service">
+        <strong>Mise à disposition</strong><br/>
+        Chauffeur dédié selon vos besoins personnels ou pros<br/>
         <strong>100 € / heure TTC</strong>
       </div>
-      <div>
-        <strong>Autres services</strong>
+      <div class="service">
+        <strong>Autres services</strong><br/>
         Événementiel, navettes privées, séminaires…
       </div>
     </div>
-  </section>
 
-  <section>
     <h2>Estimez votre course</h2>
-    <form id="calculator-form">
-      <input type="text" id="start" name="start" placeholder="Adresse de départ" required />
-      <input type="text" id="end" name="end" placeholder="Adresse d'arrivée" required />
-      <button type="submit">Calculer le tarif</button>
-    </form>
-    <p style="font-size:14px; color:#555; text-align:center;">
-      * Minimum de facturation : 20 €<br>
-      * Estimation indicative – tarif à valider avec le chauffeur.
-    </p>
-    <div style="text-align:center;">
-      <a class="btn" href="https://wa.me/33646285702" target="_blank">📱 Réserver sur WhatsApp</a>
+    <div class="form-group">
+      <input type="text" id="start" placeholder="Adresse de départ"/>
+      <input type="text" id="end" placeholder="Adresse d’arrivée"/>
+      <button onclick="calculatePrice()">Calculer le tarif</button>
+      <p id="result"></p>
+      <p style="font-size: 0.9em; color: #555;">
+        * Minimum de facturation : 20 €<br/>
+        * Estimation indicative – tarif à valider avec le chauffeur.
+      </p>
+      <a id="whatsappBtn" class="whatsapp" href="#" target="_blank">📱 Réserver sur WhatsApp</a>
     </div>
-    <p id="result"></p>
-  </section>
 
-  <section>
-    <h2>À propos</h2>
-    <p>
-      Fort d’une solide expérience dans le service haut de gamme, je propose un transport VTC discret et personnalisé.<br><br>
-      Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice et alentours.<br><br>
-      Véhicule : Tesla Model 3 noire, premium et confortable.<br><br>
-      Ponctualité, élégance, et… une bonne vanne de temps en temps, ça compte aussi 😉<br><br>
-      Avec moi, pas de retard — sauf si c’est vous ! 😄<br><br>
-      Choisissez un transport ponctuel, élégant, sécurisé (et un peu fun) pour chacun de vos trajets.<br><br>
-      Sérieux sans se prendre au sérieux, c’est aussi ça l’élégance à la niçoise ! 🕶️
-    </p>
-  </section>
-
-  <section>
-    <h2>Contact</h2>
-    <p><strong>Téléphone :</strong> 06 46 28 57 02</p>
-    <p><strong>Email :</strong> <a href="mailto:Dorian2rai@gmail.com">Dorian2rai@gmail.com</a></p>
-  </section>
+    <div class="a-propos">
+      <p>
+        Fort d’une solide expérience dans le service haut de gamme, je propose un transport VTC discret et personnalisé.<br/><br/>
+        Basé à Antibes, j’opère sur toute la Côte d’Azur : Cannes, Nice, Monaco, Saint-Tropez et au-delà.<br/><br/>
+        Véhicule premium équipé de bouteilles d’eau et de chargeurs pour assurer votre confort.<br/><br/>
+        Choisissez un transport ponctuel, élégant et sécurisé pour chacun de vos trajets.
+      </p>
+    </div>
+  </div>
 
   <footer>
-    &copy; 2025 Pick me up – Tous droits réservés
+    servicevtc.github.io
   </footer>
+
+  <script>
+    function calculatePrice() {
+      const start = document.getElementById('start').value;
+      const end = document.getElementById('end').value;
+
+      const service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix({
+        origins: [start],
+        destinations: [end],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC
+      }, (response, status) => {
+        if (status !== 'OK') {
+          document.getElementById('result').innerText = "Erreur lors du calcul. Vérifiez les adresses.";
+          return;
+        }
+
+        const distanceInKm = response.rows[0].elements[0].distance.value / 1000;
+        let price = distanceInKm * 2.5;
+        if (price < 20) price = 20;
+
+        price = price.toFixed(2);
+        document.getElementById('result').innerText = `Tarif estimé : ${price} €`;
+
+        const whatsappLink = `https://wa.me/33634128290?text=Bonjour%2C+je+souhaite+r%C3%A9server+une+course+de+${start}+vers+${end}+pour+${price}+%E2%82%AC`;
+        document.getElementById('whatsappBtn').href = whatsappLink;
+      });
+    }
+  </script>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places">
+  </script>
 </body>
 </html>
