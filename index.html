@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pick me up - Chauffeur Privé</title>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz1sjQEMHqViwfAKUdYskUx13OiIVUi-k&libraries=places"></script>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       background: #fff;
       color: #000;
     }
     header {
-      background: url('https://servicevtc.github.io/pickmeup/tesla.jpg') center/cover no-repeat;
+      background: url('https://github.com/servicevtc/pickmeup/raw/main/jp-valery-RQub4zZuOCs-unsplash.jpg') center/cover no-repeat;
       height: 300px;
       display: flex;
       flex-direction: column;
@@ -48,6 +48,9 @@
       border-radius: 10px;
       cursor: pointer;
       margin-top: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
     .green {
       background-color: #25D366;
@@ -79,7 +82,7 @@
     }
   </style>
 </head>
-<body>
+<body onload="initAutocomplete()">
 
   <header>
     <h1>Pick me up</h1>
@@ -108,11 +111,14 @@
 
   <section>
     <h2>Estimez votre course</h2>
-    <input id="origin-input" type="text" placeholder="Adresse de départ">
-    <input id="destination-input" type="text" placeholder="Adresse d’arrivée">
+    <input id="origin-input" type="text" placeholder="Adresse de départ" />
+    <input id="destination-input" type="text" placeholder="Adresse d’arrivée" />
     <button class="red" onclick="calculatePrice()">Calculer le tarif</button>
     <div class="price-info" id="price"></div>
-    <p style="text-align:center; font-size: 14px;">* Minimum de facturation : 20 €<br>* Estimation indicative – tarif à valider avec le chauffeur.</p>
+    <p style="text-align:center; font-size: 14px;">
+      * Minimum de facturation : 20 €<br>
+      * Estimation indicative – tarif à valider avec le chauffeur.
+    </p>
     <div style="text-align:center;">
       <a class="green" href="https://wa.me/33634128290" target="_blank">📱 Réserver sur WhatsApp</a>
     </div>
@@ -178,6 +184,10 @@
         }
       );
     }
+  </script>
+
+</body>
+</html>
 
     window.onload = initAutocomplete;
   </script>
